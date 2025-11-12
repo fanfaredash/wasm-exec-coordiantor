@@ -1,0 +1,20 @@
+# Go
+**/bin/
+**/out/
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
+
+# Modules
+go.sum
+
+# IDE
+.vscode/
+.idea/
+
+# Local host dirs (keep folders, ignore contents)
+host/wasm/*
+host/shared/*
+!host/wasm/.gitkeep
+!host/shared/.gitkeep

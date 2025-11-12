@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wasm-executor-job
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app: wasm-executor
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: executor
+          image: executor-demo/executor:demo
+          imagePullPolicy: Never
+          env: []
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          volumeMounts:
+            - name: wasm-dir
+              mountPath: /mnt/wasm
+              readOnly: true
+            - name: shared-dir
+              mountPath: /mnt/shared
+      volumes:
+        - name: wasm-dir
+          hostPath:
+            path: "/run/desktop/mnt/host/c/Users/lexa/Desktop/CrossChain/wasm-exec-demo/host/wasm"
+            type: Directory
+        - name: shared-dir
+          hostPath:
+            path: "/run/desktop/mnt/host/c/Users/lexa/Desktop/CrossChain/wasm-exec-demo/host/shared"
+            type: Directory

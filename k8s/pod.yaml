@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wasm-executor-pod
+spec:
+  restartPolicy: Never
+  containers:
+    - name: executor
+      image: executor-demo/executor:demo
+      imagePullPolicy: Never
+      env:
+        - name: WASM_PATH
+          value: "/examples/module.wasm"
+        - name: OUTPUT_PATH
+          value: "/tmp/result.txt"
+        - name: ENTRY
+          value: "run"
+        - name: ADD_X
+          value: "5"
+        - name: ADD_Y
+          value: "7"
