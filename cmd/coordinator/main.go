@@ -33,8 +33,20 @@ func main() {
 		logger.Fatalf("kube manager: %v", err)
 	}
 
-	moduleDir := envOr("COORDINATOR_IPFS_MIRROR", filepath.Join("host", "wasm"))
-	ipfsClient := ipfs.NewPlaceholderClient(moduleDir, cfg.Log)
+	ipfsEndpoint := envOr("COORDINATOR_IPFS_ENDPOINT", "")
+	var ipfsClient coordinator.IPFSClient
+	if ipfsEndpoint != "" {
+		client, err := ipfs.NewGatewayClient(ipfsEndpoint, cfg.Log)
+		if err != nil {
+			logger.Fatalf("ipfs gateway client: %v", err)
+		}
+		ipfsClient = client
+		logger.Printf("[INFO] using ipfs gateway %s", ipfsEndpoint)
+	} else {
+		moduleDir := envOr("COORDINATOR_IPFS_MIRROR", filepath.Join("host", "wasm"))
+		ipfsClient = ipfs.NewPlaceholderClient(moduleDir, cfg.Log)
+		logger.Printf("[INFO] using local wasm mirror %s", moduleDir)
+	}
 	contractClient := contract.NewPlaceholderClient(cfg.Log)
 
 	service, err := coordinator.NewCoordinator(cfg, contractClient, ipfsClient, kube)

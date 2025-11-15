@@ -20,21 +20,8 @@ func NewPlaceholderClient(log coordinator.Logger) *PlaceholderClient {
 func (p *PlaceholderClient) SubscribeTasks(ctx context.Context, out chan<- coordinator.TaskRequest) error {
 	tasks := []coordinator.TaskRequest{
 		{
-			TaskID:  "demo-add-001",
-			WasmCID: "module.wasm",
-			Entry:   "add",
-			Args: map[string]string{
-				"ADD_X": "5",
-				"ADD_Y": "7",
-			},
-			ResultMetadata: map[string]string{
-				"description": "demo addition task emitted by placeholder client",
-				"scenario":    "add",
-			},
-		},
-		{
 			TaskID:    "demo-fib-001",
-			WasmCID:   "fib.wasm",
+			WasmCID:   "QmUF8k9UKFqx55iWZyov8n1aGtNASaGafoFi3ofN6Tt1Ls",
 			Entry:     "fib",
 			InputJSON: []byte(`{"entry":"fib","args":[12]}`),
 			ResultMetadata: map[string]string{
@@ -44,7 +31,7 @@ func (p *PlaceholderClient) SubscribeTasks(ctx context.Context, out chan<- coord
 		},
 		{
 			TaskID:    "demo-affine-001",
-			WasmCID:   "affine.wasm",
+			WasmCID:   "QmZfTZm3UPzaVQMvxfJWdUk6KmBYTjuCAPXYxuyJnLCDrP", // IPFS 示例；可以替换为 affine.wasm
 			Entry:     "affine",
 			InputJSON: []byte(`{"entry":"affine","args":[13,9,2]}`),
 			ResultMetadata: map[string]string{

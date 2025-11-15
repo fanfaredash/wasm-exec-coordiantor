@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  ipfs:
+    image: ipfs/kubo:release
+    container_name: wasm-exec-demo-ipfs
+    restart: unless-stopped
+    environment:
+      IPFS_PROFILE: server
+    command:
+      - daemon
+      - --migrate=true
+      - --agent-version-suffix=wasm-exec-demo
+    ports:
+      - "127.0.0.1:18501:5001" # API
+      - "127.0.0.1:18480:8080" # Gateway
+    volumes:
+      - ./data:/data/ipfs
+      - ./staging:/export
+      - ../host/wasm:/wasm:ro

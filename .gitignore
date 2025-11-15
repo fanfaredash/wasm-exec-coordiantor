@@ -18,3 +18,12 @@ host/wasm/*
 host/shared/*
 !host/wasm/.gitkeep
 !host/shared/.gitkeep
+
+# Local executable files
+exectuor
+executor.exe
+coordinator
+coordinator.exe
+
+# Local IPFS dirs
+ipfs/data/*

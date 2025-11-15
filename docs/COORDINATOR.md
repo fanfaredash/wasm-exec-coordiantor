@@ -51,7 +51,6 @@ $env:COORDINATOR_IPFS_MIRROR = ".\host\wasm"
 
 | 场景 | Wasm 文件 | 输入 | 说明 |
 | --- | --- | --- | --- |
-| `add` | `module.wasm` | `ENTRY=add`，`ADD_X/ADD_Y` 环境变量 | 传统加法示例 |
 | `fib` | `fib.wasm` | `InputJSON = {"entry":"fib","args":[12]}` | 计算 `fib(12)=144` |
 | `affine` | `affine.wasm` | `InputJSON = {"entry":"affine","args":[13,9,2]}` | 计算线性函数 |
 
