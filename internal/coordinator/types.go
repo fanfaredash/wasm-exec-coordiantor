@@ -9,6 +9,7 @@ import (
 type TaskRequest struct {
 	TaskID         string
 	WasmCID        string
+	InputCID       string
 	Entry          string
 	Args           map[string]string
 	InputJSON      []byte

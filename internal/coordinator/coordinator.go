@@ -84,6 +84,16 @@ func (c *Coordinator) processTask(parent context.Context, task TaskRequest) {
 		return
 	}
 
+	if len(task.InputJSON) == 0 && task.InputCID != "" {
+		inputBytes, err := c.ipfs.FetchModule(ctx, task.InputCID)
+		if err != nil {
+			c.log.Errorf("fetch input for %s: %v", task.TaskID, err)
+			c.publishFailure(ctx, task, fmt.Errorf("fetch input: %w", err))
+			return
+		}
+		task.InputJSON = inputBytes
+	}
+
 	jobName, configMaps, err := c.kube.CreateJob(ctx, c.cfg, task, module)
 	if err != nil {
 		c.log.Errorf("create job for %s: %v", task.TaskID, err)

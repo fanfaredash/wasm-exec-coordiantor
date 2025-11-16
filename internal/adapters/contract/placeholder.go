@@ -6,6 +6,13 @@ import (
 	"executor/internal/coordinator"
 )
 
+const (
+	fibWasmCID     = "QmUF8k9UKFqx55iWZyov8n1aGtNASaGafoFi3ofN6Tt1Ls"
+	fibInputCID    = "QmbBuEbFrx1vcoPukHStpLG3G1mmX8dpSy8xUAGVFK9AdG"
+	affineWasmCID  = "QmZfTZm3UPzaVQMvxfJWdUk6KmBYTjuCAPXYxuyJnLCDrP"
+	affineInputCID = "Qmcs5AR22G2VFBDiqH4jK7viJeNLHvxHn9LYuw8H4tegQi"
+)
+
 // PlaceholderClient 是用于日志演示的合约客户端占位实现。
 type PlaceholderClient struct {
 	log coordinator.Logger
@@ -20,20 +27,20 @@ func NewPlaceholderClient(log coordinator.Logger) *PlaceholderClient {
 func (p *PlaceholderClient) SubscribeTasks(ctx context.Context, out chan<- coordinator.TaskRequest) error {
 	tasks := []coordinator.TaskRequest{
 		{
-			TaskID:    "demo-fib-001",
-			WasmCID:   "QmUF8k9UKFqx55iWZyov8n1aGtNASaGafoFi3ofN6Tt1Ls",
-			Entry:     "fib",
-			InputJSON: []byte(`{"entry":"fib","args":[12]}`),
+			TaskID:   "demo-fib-001",
+			WasmCID:  fibWasmCID,
+			InputCID: fibInputCID,
+			Entry:    "fib",
 			ResultMetadata: map[string]string{
 				"description": "demo fibonacci task emitted by placeholder client",
 				"scenario":    "fib",
 			},
 		},
 		{
-			TaskID:    "demo-affine-001",
-			WasmCID:   "QmZfTZm3UPzaVQMvxfJWdUk6KmBYTjuCAPXYxuyJnLCDrP", // IPFS 示例；可以替换为 affine.wasm
-			Entry:     "affine",
-			InputJSON: []byte(`{"entry":"affine","args":[13,9,2]}`),
+			TaskID:   "demo-affine-001",
+			WasmCID:  affineWasmCID,
+			InputCID: affineInputCID,
+			Entry:    "affine",
 			ResultMetadata: map[string]string{
 				"description": "demo affine task emitted by placeholder client",
 				"scenario":    "affine",
